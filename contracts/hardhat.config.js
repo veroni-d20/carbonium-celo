@@ -48,6 +48,18 @@ module.exports = {
             url: "https://polygon-mumbai-bor.publicnode.com	",
             accounts: [process.env.PRIVATE_KEY || ""],
         },
+        celoMainNet: {
+            url: "https://forno.celo.org",
+            accounts: [PRIVATE_KEY],
+            chainId: 42220,
+            allowUnlimitedContractSize: true,
+        },
+        celoAlfajores: {
+            url: "https://alfajores-forno.celo-testnet.org",
+            accounts: [PRIVATE_KEY],
+            chainId: 44787,
+            allowUnlimitedContractSize: true,
+        },
         // sepolia: {
         //     url: SEPOLIA_RPC_URL,
         //     accounts: PRIVATE_KEY !== undefined ? [PRIVATE_KEY] : [],
@@ -103,7 +115,7 @@ module.exports = {
     solidity: {
         compilers: [
             {
-                version: "0.8.19"
+                version: "0.8.19",
             },
         ],
     },
