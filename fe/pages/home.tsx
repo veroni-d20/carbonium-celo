@@ -1,24 +1,19 @@
 import { useEffect, useState, useRef } from "react";
 import Head from "next/head";
 import axios from "axios";
-import {
-  useAccount,
-  useContractRead,
-  useContractWrite,
-  useContractReads,
-} from "wagmi";
+import { useAccount, useContractRead, useContractWrite } from "wagmi";
 import DEPLOYED_CONTRACTS from "@/utilities/contractDetails";
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import ApplicationLayout from "@/components/Utilities/ApplicationLayout";
-import Link from "next/link";
-import { useEthersSigner } from "@/utilities/ethers";
-import { useNetwork } from "wagmi";
-import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/20/solid";
+import { useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 const standards = [1, 2, 3];
 
 export default function Home() {
-  const { address } = useAccount();
+  const { isConnected, address } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
 
   const [attestation, setAtteststations] = useState<any>([]);
   const [carboniumTokenBalance, setCarboniumTokenBalance] = useState<any>(0);
@@ -91,6 +86,8 @@ export default function Home() {
   });
 
   useEffect(() => {
+    console.log(isConnected);
+
     async function fetchBalances() {
       await refetchCarboniumBalance().then(() =>
         setCarboniumTokenBalance(balance)
@@ -102,7 +99,9 @@ export default function Home() {
       );
     }
 
-    fetchBalances();
+    if (address) {
+      fetchBalances();
+    }
   }, [standardOne, standardTwo, standardThree]);
 
   const range: any = (n: number) =>
@@ -164,28 +163,38 @@ export default function Home() {
                     placeholder="1"
                   />
                   {quotationOne && (
-                    <p>Equivalent ERC20 is: {quotationOne.toString()}</p>
+                    <p className="text-center mt-3">
+                      Equivalent ERC20 is: {quotationOne.toString()}
+                    </p>
                   )}
-                  <button
-                    type="submit"
-                    className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                    onClick={async () =>
-                      await refetchQuoteOne().then(() =>
-                        setQuotationOne(quoteOne)
-                      )
+                  <div
+                    className={
+                      quotationOne
+                        ? "mt-2 grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
+                        : "mt-2 justify-center"
                     }
                   >
-                    Get Quote
-                  </button>
-                  {quotationOne && (
                     <button
                       type="submit"
-                      className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                      onClick={() => swapValues({ args: [1, tokenAmount] })}
+                      className="flex w-full justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                      onClick={async () =>
+                        await refetchQuoteOne().then(() =>
+                          setQuotationOne(quoteOne)
+                        )
+                      }
                     >
-                      Deposit Carbon Credits
+                      Get Quote
                     </button>
-                  )}
+                    {quotationOne && (
+                      <button
+                        type="submit"
+                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        onClick={() => swapValues({ args: [1, tokenAmount] })}
+                      >
+                        Deposit
+                      </button>
+                    )}
+                  </div>
                 </div>
               </li>
               <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
@@ -210,28 +219,38 @@ export default function Home() {
                     placeholder="1"
                   />
                   {quotationTwo && (
-                    <p>Equivalent ERC20 is: {quotationTwo.toString()}</p>
+                    <p className="text-center mt-3">
+                      Equivalent ERC20 is: {quotationTwo.toString()}
+                    </p>
                   )}
-                  <button
-                    type="submit"
-                    className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                    onClick={async () =>
-                      await refetchQuoteTwo().then(() =>
-                        setQuotationTwo(quoteTwo)
-                      )
+                  <div
+                    className={
+                      quotationTwo
+                        ? "mt-2 grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
+                        : "mt-2 justify-center"
                     }
                   >
-                    Get Quote
-                  </button>
-                  {quotationTwo && (
                     <button
                       type="submit"
-                      className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                      onClick={() => swapValues({ args: [2, tokenAmount] })}
+                      className="flex w-full justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                      onClick={async () =>
+                        await refetchQuoteTwo().then(() =>
+                          setQuotationTwo(quoteTwo)
+                        )
+                      }
                     >
-                      Deposit Carbon Credits
+                      Get Quote
                     </button>
-                  )}
+                    {quotationTwo && (
+                      <button
+                        type="submit"
+                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        onClick={() => swapValues({ args: [2, tokenAmount] })}
+                      >
+                        Deposit Carbon Credits
+                      </button>
+                    )}
+                  </div>
                 </div>
               </li>
               <li className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
@@ -256,28 +275,38 @@ export default function Home() {
                     placeholder="1"
                   />
                   {quotationThree && (
-                    <p>Equivalent ERC20 is: {quotationThree.toString()}</p>
+                    <p className="text-center mt-3">
+                      Equivalent ERC20 is: {quotationThree.toString()}
+                    </p>
                   )}
-                  <button
-                    type="submit"
-                    className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                    onClick={async () =>
-                      await refetchQuoteThree().then(() =>
-                        setQuotationThree(quoteThree)
-                      )
+                  <div
+                    className={
+                      quotationThree
+                        ? "mt-2 grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3"
+                        : "mt-2 justify-center"
                     }
                   >
-                    Get Quote
-                  </button>
-                  {quotationThree && (
                     <button
                       type="submit"
-                      className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
-                      onClick={() => swapValues({ args: [3, tokenAmount] })}
+                      className="flex w-full justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                      onClick={async () =>
+                        await refetchQuoteThree().then(() =>
+                          setQuotationThree(quoteThree)
+                        )
+                      }
                     >
-                      Deposit Carbon Credits
+                      Get Quote
                     </button>
-                  )}
+                    {quotationThree && (
+                      <button
+                        type="submit"
+                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        onClick={() => swapValues({ args: [3, tokenAmount] })}
+                      >
+                        Deposit Carbon Credits
+                      </button>
+                    )}
+                  </div>
                 </div>
               </li>
             </ul>

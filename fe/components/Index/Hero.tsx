@@ -1,7 +1,12 @@
 import Image from "next/image";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount, useConnect } from "wagmi";
 
 export default function Hero() {
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
   return (
     <>
       <div
@@ -9,8 +14,8 @@ export default function Hero() {
         className="relative isolate overflow-hidden bg-primary-900 pb-16 pt-0 sm:pb-20"
       >
         <Image
-          src="/hero.jpeg"
-          alt="YouTuber"
+          src="/hero2.jpg"
+          alt="Plant"
           height={1268}
           width={2126}
           className="absolute inset-0 -z-10 h-full w-full object-cover backdrop-opacity-20 backdrop-invert bg-primary/50"
@@ -33,31 +38,45 @@ export default function Hero() {
               <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-zinc-400 ring-1 ring-white/10 hover:ring-white/20">
                 Carbonium is powered by{" "}
                 <a
-                  href="https://pego.network/"
+                  href="https://celo.org/"
                   className="font-semibold text-white"
                   target="_blank"
                 >
                   <span className="absolute inset-0" aria-hidden="true" />
-                  Pego Network <span aria-hidden="true">&rarr;</span>
+                  Celo Network <span aria-hidden="true">&rarr;</span>
                 </a>
               </div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-black tracking-tight text-white sm:text-6xl space-y-3">
+              <div className="text-4xl font-black tracking-tight text-white sm:text-5xl space-y-3">
                 <div>
                   <span className="text-primary-600">
-                    Like, Comment & Subscribe
+                    Monetize your Carbon Offsets
                   </span>{" "}
-                  while earning Pego tokens!
+                  and make money while doing it!
                 </div>
               </div>
               <p className="mt-6 text-lg leading-8 text-zinc-300">
-                Carbonium: Elevate your YouTube experience! Earn valuable tokens
-                for liking, commenting, and subscribing. Join us now and be part
-                of the future of content engagement.
+                Carbonium: Empowering Sustainability Through Blockchain
+                Innovation.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <ConnectButton />
+                {!isConnected ? (
+                  <button
+                    type="button"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    onClick={() => connect()}
+                  >
+                    Connect Wallet
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    {address}
+                  </button>
+                )}
                 <a
                   href="#"
                   className="text-sm font-semibold leading-6 text-white"

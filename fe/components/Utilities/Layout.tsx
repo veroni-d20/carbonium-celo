@@ -3,8 +3,8 @@ import { Disclosure } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount, useConnect } from "wagmi";
 import Footer from "@/components/Utilities/Footer";
 
 const navigation = [
@@ -23,6 +23,9 @@ interface Props {
 export default function Layout({ children }: Props) {
   const router = useRouter();
   const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
 
   useEffect(() => {
     if (address) {
@@ -82,7 +85,22 @@ export default function Layout({ children }: Props) {
                       </div>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <ConnectButton />
+                      {!isConnected ? (
+                        <button
+                          type="button"
+                          className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          onClick={() => connect()}
+                        >
+                          Connect Wallet
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                          {address}
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

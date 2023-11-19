@@ -7,7 +7,7 @@ import {
 } from "@rainbow-me/rainbowkit";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { celo, celoAlfajores } from "wagmi/chains";
 import "@rainbow-me/rainbowkit/styles.css";
 import "@/styles/globals.css";
 import "@/styles/index.scss";
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [ready, setReady] = useState(false);
 
   const { publicClient, chains } = configureChains(
-    [MumbaiEVM],
+    [MumbaiEVM, celo, celoAlfajores],
     [publicProvider()]
   );
 
@@ -65,7 +65,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {ready ? (
         // <GoogleOAuthProvider clientId="276764548749-kp580h77fv3bg9ofoeu5563saggg7jpo.apps.googleusercontent.com">
         <WagmiConfig config={wagmiConfig}>
-          <RainbowKitProvider
+          {/* <RainbowKitProvider
             chains={chains}
             theme={lightTheme({
               accentColor: "#9333ea",
@@ -74,9 +74,9 @@ export default function App({ Component, pageProps }: AppProps) {
               fontStack: "system",
               overlayBlur: "small",
             })}
-          >
-            <Component {...pageProps} />
-          </RainbowKitProvider>
+          > */}
+          <Component {...pageProps} />
+          {/* </RainbowKitProvider> */}
         </WagmiConfig>
       ) : // </GoogleOAuthProvider>
       null}
