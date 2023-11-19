@@ -59,6 +59,8 @@ module.exports = {
             accounts: [process.env.PRIVATE_KEY],
             chainId: 44787,
             allowUnlimitedContractSize: true,
+            gas: 2100000,
+            gasPrice: 8000000000,
         },
         // sepolia: {
         //     url: SEPOLIA_RPC_URL,

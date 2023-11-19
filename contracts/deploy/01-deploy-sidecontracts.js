@@ -23,18 +23,23 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         log: true,
         waitConfirmations: waitBlockConfirmations,
     })
-    const carbonCreditsContract = await ethers.getContract('CarbonCredits')
+    const carbonCreditsContract = await ethers.getContract("CarbonCredits")
 
-    const attestation = await deploy("Attestation", {
+    const eas = await deploy("EasCarbonium", {
         from: deployer,
-        args: [
-            "0xaEF4103A04090071165F78D45D83A0C0782c2B2a",
-            carbonCreditsContract.address
-        ],
+        args: [],
         log: true,
         waitConfirmations: waitBlockConfirmations,
     })
-    const attestationContract = await ethers.getContract('Attestation')
+    const easContract = await ethers.getContract("EasCarbonium")
+
+    const attestation = await deploy("Attestation", {
+        from: deployer,
+        args: [easContract.address, carbonCreditsContract.address],
+        log: true,
+        waitConfirmations: waitBlockConfirmations,
+    })
+    const attestationContract = await ethers.getContract("Attestation")
     await carbonCreditsContract.transferOwnership(attestationContract.address)
 
     // Verify the deployment
