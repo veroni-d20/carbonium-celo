@@ -89,7 +89,6 @@ export default function ApplicationLayout({
   const { disconnect } = useDisconnect({
     onSuccess() {
       router.push("/");
-      localStorage.removeItem("token");
     },
   });
 
@@ -152,6 +151,13 @@ export default function ApplicationLayout({
                       <div className="hidden md:block">
                         <div className="ml-4 flex items-center md:ml-6">
                           {/* Profile dropdown */}
+                          <button
+                            type="button"
+                            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            onClick={() => disconnect()}
+                          >
+                            Disconnect
+                          </button>
                           {address && (
                             <Menu as="div" className="relative ml-3">
                               <div>
@@ -190,6 +196,7 @@ export default function ApplicationLayout({
                       </div>
                       <div className="-mr-2 flex md:hidden">
                         {/* Mobile menu button */}
+
                         <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="absolute -inset-0.5" />
                           <span className="sr-only">Open main menu</span>
@@ -230,6 +237,13 @@ export default function ApplicationLayout({
                         {item.name}
                       </Disclosure.Button>
                     ))}
+                    <button
+                      type="button"
+                      className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      onClick={() => disconnect()}
+                    >
+                      Disconnect
+                    </button>
                   </div>
                 </Disclosure.Panel>
               </>

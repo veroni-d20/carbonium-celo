@@ -10,8 +10,8 @@ export default function Terms() {
     <>
       <Head>
         <title>
-          Terms of Service - Carbonium | Like, Comment & Subscribe to earn Pego
-          tokens
+          Terms of Service - Carbonium | Empowering Sustainability Through
+          Blockchain Innovation tokens
         </title>
       </Head>
 

@@ -28,7 +28,8 @@ export default function Attestation() {
     <>
       <Head>
         <title>
-          Dashboard - Carbonium | Like, Comment & Subscribe to earn Pego tokens
+          Dashboard - Carbonium | Empowering Sustainability Through Blockchain
+          Innovation tokens
         </title>
       </Head>
 
@@ -97,7 +98,7 @@ function AttestationCard({ detail }: any) {
           detail[0].issuerName,
           detail[0].issuerCountry,
         ],
-        detail[0].address,
+        "0xd69a4dd0dfb261a8EF37F45925491C077EF1dBFb",
       ],
     });
 

@@ -15,7 +15,7 @@ export default function Home() {
     connector: new InjectedConnector(),
   });
 
-  const [attestation, setAtteststations] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
   const [carboniumTokenBalance, setCarboniumTokenBalance] = useState<any>(0);
   const [standardOneBalance, setStandardOneBalance] = useState<any>(0);
   const [standardTwoBalance, setStandardTwoBalance] = useState<any>(0);
@@ -58,7 +58,11 @@ export default function Home() {
       args: [address, 3],
     });
 
-  const { write: swapValues } = useContractWrite({
+  const {
+    write: swapValues,
+    isLoading: isSwapLoading,
+    isSuccess,
+  } = useContractWrite({
     abi: DEPLOYED_CONTRACTS.LIQUIDITY_POOL.abi,
     address: DEPLOYED_CONTRACTS.LIQUIDITY_POOL.address as `0x${string}`,
     functionName: "swapERC1155ForERC20",
@@ -86,8 +90,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    console.log(isConnected);
-
     async function fetchBalances() {
       await refetchCarboniumBalance().then(() =>
         setCarboniumTokenBalance(balance)
@@ -100,6 +102,7 @@ export default function Home() {
     }
 
     if (address) {
+      console.log(isConnected);
       fetchBalances();
     }
   }, [standardOne, standardTwo, standardThree]);
@@ -111,7 +114,8 @@ export default function Home() {
     <>
       <Head>
         <title>
-          Dashboard - Carbonium | Like, Comment & Subscribe to earn Pego tokens
+          Dashboard - Carbonium | Empowering Sustainability Through Blockchain
+          Innovation tokens
         </title>
       </Head>
 
@@ -187,11 +191,12 @@ export default function Home() {
                     </button>
                     {quotationOne && (
                       <button
-                        type="submit"
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        type="button"
+                        disabled={isSuccess}
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                         onClick={() => swapValues({ args: [1, tokenAmount] })}
                       >
-                        Deposit
+                        {!isSwapLoading ? "Deposit" : "Loading"}
                       </button>
                     )}
                   </div>
@@ -243,11 +248,12 @@ export default function Home() {
                     </button>
                     {quotationTwo && (
                       <button
-                        type="submit"
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        type="button"
+                        disabled={isSuccess}
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                         onClick={() => swapValues({ args: [2, tokenAmount] })}
                       >
-                        Deposit Carbon Credits
+                        {!isSwapLoading ? "Deposit" : "Loading"}
                       </button>
                     )}
                   </div>
@@ -299,11 +305,12 @@ export default function Home() {
                     </button>
                     {quotationThree && (
                       <button
-                        type="submit"
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        type="button"
+                        disabled={isSuccess}
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                         onClick={() => swapValues({ args: [3, tokenAmount] })}
                       >
-                        Deposit Carbon Credits
+                        {!isSwapLoading ? "Deposit" : "Loading"}
                       </button>
                     )}
                   </div>

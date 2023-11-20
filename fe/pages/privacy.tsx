@@ -10,8 +10,8 @@ export default function Privacy() {
     <>
       <Head>
         <title>
-          Privacy Policy - Carbonium | Like, Comment & Subscribe to earn Pego
-          tokens
+          Privacy Policy - Carbonium | Empowering Sustainability Through
+          Blockchain Innovation tokens
         </title>
       </Head>
 

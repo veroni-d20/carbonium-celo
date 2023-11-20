@@ -50,7 +50,8 @@ export default function CreateCarbonCert() {
     <>
       <Head>
         <title>
-          Dashboard - Carbonium | Like, Comment & Subscribe to earn Pego tokens
+          Dashboard - Carbonium | Empowering Sustainability Through Blockchain
+          Innovation tokens
         </title>
       </Head>
 

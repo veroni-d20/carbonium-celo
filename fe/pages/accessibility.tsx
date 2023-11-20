@@ -10,8 +10,8 @@ export default function Accessibiity() {
     <>
       <Head>
         <title>
-          Accessibility - Carbonium | Like, Comment & Subscribe to earn Pego
-          tokens
+          Accessibility - Carbonium | Empowering Sustainability Through
+          Blockchain Innovation tokens
         </title>
       </Head>
 

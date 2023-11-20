@@ -6,7 +6,10 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>Carbonium | Like, Comment & Subscribe to earn Pego tokens</title>
+        <title>
+          Carbonium | Empowering Sustainability Through Blockchain Innovation
+          tokens
+        </title>
       </Head>
 
       <Layout>

@@ -67,7 +67,11 @@ export default function Home() {
     args: [tokenAmount, 3],
   });
 
-  const { write: swapValues } = useContractWrite({
+  const {
+    write: swapValues,
+    isLoading: isSwapLoading,
+    isSuccess,
+  } = useContractWrite({
     abi: DEPLOYED_CONTRACTS.LIQUIDITY_POOL.abi,
     address: DEPLOYED_CONTRACTS.LIQUIDITY_POOL.address as `0x${string}`,
     functionName: "swapERC20ForERC1155",
@@ -95,7 +99,8 @@ export default function Home() {
     <>
       <Head>
         <title>
-          Dashboard - Carbonium | Like, Comment & Subscribe to earn Pego tokens
+          Dashboard - Carbonium | Empowering Sustainability Through Blockchain
+          Innovation tokens
         </title>
       </Head>
 
@@ -171,13 +176,14 @@ export default function Home() {
                     </button>
                     {quotationOne && (
                       <button
-                        type="submit"
+                        type="button"
+                        disabled={isSuccess}
                         onClick={() =>
                           swapValues({ args: [Number(tokenAmount), 1] })
                         }
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                       >
-                        Buy Carbon Credits
+                        {!isSwapLoading ? "Buy Carbon Credits" : "Loading"}
                       </button>
                     )}
                   </div>
@@ -229,13 +235,14 @@ export default function Home() {
                     </button>
                     {quotationTwo && (
                       <button
-                        type="submit"
+                        type="button"
+                        disabled={isSuccess}
                         onClick={() =>
                           swapValues({ args: [Number(tokenAmount), 2] })
                         }
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                       >
-                        Buy Carbon Credits
+                        {!isSwapLoading ? "Buy Carbon Credits" : "Loading"}
                       </button>
                     )}
                   </div>
@@ -287,13 +294,14 @@ export default function Home() {
                     </button>
                     {quotationThree && (
                       <button
-                        type="submit"
+                        type="button"
+                        disabled={isSuccess}
                         onClick={() =>
                           swapValues({ args: [Number(tokenAmount), 3] })
                         }
-                        className="flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
+                        className="disabled:opacity-50 disabled:bg-zinc-800 flex justify-center rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-2"
                       >
-                        Buy Carbon Credits
+                        {!isSwapLoading ? "Buy Carbon Credits" : "Loading"}
                       </button>
                     )}
                   </div>
