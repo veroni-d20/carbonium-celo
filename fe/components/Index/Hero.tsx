@@ -14,7 +14,7 @@ export default function Hero() {
         className="relative isolate overflow-hidden bg-primary-900 pb-16 pt-0 sm:pb-20"
       >
         <Image
-          src="/hero2.jpg"
+          src="/hero.jpg"
           alt="Plant"
           height={1268}
           width={2126}
